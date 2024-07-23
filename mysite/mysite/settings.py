@@ -55,7 +55,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "DIRS": [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,8 +74,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
  
-'''
- DATABASES = {
+
+DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "polls",
@@ -86,14 +86,14 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
     }
 }
 
- '''
 
-DATABASES = {  
+
+'''DATABASES = {  
     'default': {  
         'ENGINE': 'django.db.backends.sqlite3',  
         'NAME': BASE_DIR / "db.sqlite3",  
     }  
-}
+}'''
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
