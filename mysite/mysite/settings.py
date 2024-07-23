@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-%+77&+$9@^7p@c_&ikq3^3#j75j6gbakopkxfk%e@ew2ci$uyh
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+SITE_ID = 1
 
 ALLOWED_HOSTS = []
 
@@ -32,15 +33,51 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
      "polls.apps.PollsConfig",
+     "djangocms_admin_style",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django.contrib.sites",
+    "cms",
+    "menus",
+    "treebeard",
+    "sekizai",
+    "djangocms_versioning",
+"djangocms_alias",
+'filer',
+'easy_thumbnails',
+"djangocms_text_ckeditor",
+   
+    "djangocms_frontend",
+    "djangocms_frontend.contrib.accordion",
+    "djangocms_frontend.contrib.alert",
+    "djangocms_frontend.contrib.badge",
+    "djangocms_frontend.contrib.card",
+    "djangocms_frontend.contrib.carousel",
+    "djangocms_frontend.contrib.collapse",
+    "djangocms_frontend.contrib.content",
+    "djangocms_frontend.contrib.grid",
+    "djangocms_frontend.contrib.image",
+    "djangocms_frontend.contrib.jumbotron",
+    "djangocms_frontend.contrib.link",
+    "djangocms_frontend.contrib.listgroup",
+    "djangocms_frontend.contrib.media",
+    "djangocms_frontend.contrib.tabs",
+    "djangocms_frontend.contrib.utilities",
+
+    "djangocms_file",
+"djangocms_picture",
+"djangocms_video",
+"djangocms_googlemap",
+"djangocms_snippet",
+"djangocms_style",
 ]
 
 MIDDLEWARE = [
+    'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -48,6 +85,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #django cms
+    "django.middleware.locale.LocaleMiddleware",  # not installed by default
+
+"cms.middleware.user.CurrentUserMiddleware",
+"cms.middleware.page.CurrentPageMiddleware",
+"cms.middleware.toolbar.ToolbarMiddleware",
+"cms.middleware.language.LanguageCookieMiddleware",
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -63,6 +108,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.i18n",
+                "sekizai.context_processors.sekizai",
+                'cms.context_processors.cms_settings',
             ],
         },
     },
@@ -75,7 +123,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
  
 
-DATABASES = {
+'''DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "polls",
@@ -84,16 +132,16 @@ DATABASES = {
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
-}
+}'''
 
 
 
-'''DATABASES = {  
+DATABASES = {  
     'default': {  
         'ENGINE': 'django.db.backends.sqlite3',  
         'NAME': BASE_DIR / "db.sqlite3",  
     }  
-}'''
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -116,7 +164,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+    ("en", "English"),
+    ("de", "German"),
+    ("it", "Italian"),
+]
+LANGUAGE_CODE = "en"
 
 TIME_ZONE = 'UTC'
 
@@ -134,3 +187,20 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CMS_CONFIRM_VERSION4 = True
+X_FRAME_OPTIONS = "SAMEORIGIN"
+
+CMS_TEMPLATES = [
+    ('home.html', 'Home page template'),
+]
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+THUMBNAIL_HIGH_RESOLUTION = True
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters'
+)
