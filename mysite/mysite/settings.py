@@ -204,3 +204,13 @@ THUMBNAIL_PROCESSORS = (
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters'
 )
+
+CMS_TEMPLATES = [
+    # a minimal template to get started with
+    ('minimal.html', 'Minimal template'),
+
+    # optional templates that extend base.html, to be used with Bootstrap 5
+    ('bootstrap5.html', 'Bootstrap 5 Demo'),
+
+    ('whitenoise-static-files-demo.html', 'Static File Demo'),
+] 
